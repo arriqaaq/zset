@@ -859,13 +859,9 @@ func (z *ZSet) ZRangeByScore(key string, start float64, end float64, options *ZR
 }
 
 func (z *ZSet) Keys() []string {
-	keys := make([]string, len(z.records))
-
-	i := 0
+	keys := make([]string, 0, len(z.records))
 	for k := range z.records {
-		keys[i] = k
-		i++
+		keys = append(keys, k)
 	}
-
 	return keys
 }
