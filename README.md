@@ -18,35 +18,42 @@ This will retrieve the library.
 ```go
 package main
 
-import "github.com/arriqaaq/zset"
+import (
+	"fmt"
 
-type kv struct{k,v string}
+	"github.com/arriqaaq/zset"
+)
+
+type kv struct{ k, v int }
 
 func main() {
-    key:="zset1"
+	key := "zset1"
 
-    // ZAdd (accepts any value)
-    n := zset.New()
+	// ZAdd (accepts any value)
+	n := zset.New()
 	n.ZAdd(key, 1, "ced", nil)
-	n.ZAdd(key, 1, "efg", &kv{1,2})
+	n.ZAdd(key, 1, "efg", &kv{1, 2})
 
-    // ZScore
-	_, score := n.ZScore(testKey, "ced")
-	assert.Equal(t, 1, int(score))
+	// ZScore
+	_, score := n.ZScore(key, "ced")
+	fmt.Println("score: ", int(score))
+	// score: 1
 
-    // ZRank
-	rank := n.ZRank(testKey, "ced")
-	assert.Equal(t, 0, int(rank))
+	// ZRank
+	rank := n.ZRank(key, "ced")
+	fmt.Println("zrank: ", int(rank))
+	// zrank: 0
 
-    // ZRevRank
-	rank := n.ZRevRank(testKey, "ced")
-	assert.Equal(t, 6, int(rank))
+	// ZRevRank
+	rank = n.ZRevRank(key, "ced")
+	fmt.Println("zrevrank: ", int(rank))
+	// zrevrank: 1
 
-    // ZIncrBy
-	n.ZIncrBy(testKey, 300, "ced")
-	_, score := n.ZScore(testKey, "ced")
-	assert.Equal(t, 301, int(score))
-
+	// ZIncrBy
+	n.ZIncrBy(key, 300, "ced")
+	_, score = n.ZScore(key, "ced")
+	fmt.Println("score: ", int(score))
+	// score: 301
 }
 ```
 
